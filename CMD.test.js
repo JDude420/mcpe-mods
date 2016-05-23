@@ -7,8 +7,40 @@
 */
 
 //VERSION CHECK SECTION
-/* **still being edited**
-var updatelog = v0.0;
+var updatelog = "v0.0";
+function compareVersion() {
+	var r  = new java.lang.Runnable({ run: function() {
+		try {
+			var u = new java.net.URL("https://raw.githubusercontent.com/JDude420/mcpe-mods/master/CMD.versions.txt");
+			var c = u.openConnection();
+			c.setRequestMethod("GET");
+			c.setDoOutput(true);
+			c.connect();
+			c.getContentLength();
+			var input = c.getInputStream();
+			var contents = java.lang.reflect.Array.newInstance(java.lang.Byte.TYPE, 1024);
+			var bytesRead = 0; 
+			var strFileContents;
+			while((bytesRead = input.read(contents)) != -1) { 
+				strFileContents = new java.lang.String(contents, 0, bytesRead);			   
+			}
+			newVersion = strFileContents;
+			if(updatelog+"\n" != strFileContents) {
+				colourMsg("New version! " + newVersion);
+				updateScript();
+			}
+			
+		}
+		catch(e) {
+			if(e == "JavaException: java.net.UnknownHostException: Unable to resolve host \"raw.githubusercontent.com\": No address associated with hostname") { }
+			else {
+				errorMsg("Line 1211: " + e);
+			}
+		}
+	}});
+	var th = new java.lang.Thread(r);
+	th.start();
+}
 function updateScript() {
 	try {
 		var builder = new android.app.AlertDialog.Builder(ctx);
@@ -23,7 +55,7 @@ function updateScript() {
 			onClick: function(par1) {
 				var ru  = new java.lang.Runnable({ run: function() {
 					try {
-						var u = new java.net.URL("https://raw.githubusercontent.com/Connor4898/ModPE-Scripts/master/SPC/SPCPE.js");
+						var u = new java.net.URL("https://raw.githubusercontent.com/JDude420/mcpe-mods/master/CMD.test.js");
 						var c = u.openConnection();
 						c.setRequestMethod("GET");
 						c.setDoOutput(true);
@@ -36,7 +68,7 @@ function updateScript() {
 							newScript += new java.lang.String(contents, 0, bytesRead);			   
 						}
 						var patchesFolder = ctx.getDir("modscripts", 0);
-						var scriptFile = new java.io.File(patchesFolder, "SPCPE.js");
+						var scriptFile = new java.io.File(patchesFolder, "CMD-Set.js");
 						var printWriter = new java.io.PrintWriter(scriptFile);
 						printWriter.write(newScript);
 						printWriter.flush();
@@ -65,7 +97,6 @@ function updateScript() {
 		errorMsg("Line 1270: " + e);
 	}
 }
-*/
 //VERSION CHECK END
 
 /* _/﹋\_ 
